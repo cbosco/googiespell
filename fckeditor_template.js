@@ -1,18 +1,17 @@
 /*
  * Markup: <textarea id="FCKeditor1" name="FCKeditor1"></textarea>
  * 
- * googiespell directory  = /demo/googiespell
- * fckeditor directory    = /demo/fckeditor/ 
- * 
+ * Depends on googiespell_editor.js
+ *            fckeditor ( /demo/fckeditor/ )
  */
 
 // FCKEditor - Handler for when editor is ready to set custom events.
 function FCKeditor_OnComplete(editorObj)
 {
   var editorDocument = editorObj.EditingArea.Document,
-      googie = new GoogieSpell('/cbsides/demo/googiespell/', '/cbsides/demo/googiespell/sendReq.php?lang=');
+      googie = new GoogieSpell('/demo/googiespell/', '/demo/googiespell/sendReq.php?lang=');
     
-  //  Attach GoogieSpell to editor's iframe page now that it's ready
+  //  Attach GoogieSpell to editor's iframe document now that it's ready
   googie.setSpellContainer('spell_container');
   googie.decorateTextarea(editorDocument.body);
   
@@ -23,11 +22,11 @@ function FCKeditor_OnComplete(editorObj)
   var googieCSS = editorDocument.createElement('link');
   googieCSS.setAttribute('rel', 'stylesheet');
   googieCSS.setAttribute('type', 'text/css');
-  googieCSS.setAttribute('href', '/cbsides/demo/googiespell/googiespell.css');
+  googieCSS.setAttribute('href', '/demo/googiespell/googiespell.css');
   editorDocument.getElementsByTagName('head')[0].appendChild(googieCSS);
   
   /*
-   * Replace AJS.DIV() with a div generated in the editor's iframe document
+   * Replace AJS.DIV() with an element generated in the editor's iframe document
    * so it can be appended to the editor in all browsers (looking at you, IE!)
    */
   googie.createInFrame = function(tag, className) {
@@ -70,8 +69,7 @@ function onGoogieStateChange(state, googie, editorObj) {
  */
 function onGoogieLayerReady(googie, editorObj) {
   var layerStyle = googie.edit_layer.style;
-  layerStyle.padding = "5px"; // match FCK editor padding
-  //  layerStyle.style.margin = "8px"; // match CKEditor margin
+  layerStyle.padding = "5px"; // match FCKeditor padding
   layerStyle.border = 'none';
   layerStyle.fontFamily = "Arial,Verdana,sans-serif";
   layerStyle.fontSize = "12px";
@@ -115,8 +113,8 @@ function onGoogieSuggestionsReady(googie, editorObj) {
  * Kick off FCK editor on load
  */
 window.onload = function() {
-  var oFCKeditor = new FCKeditor( 'FCKeditor1') ;
-  oFCKeditor.BasePath = '/cbsides/demo/fckeditor/' ;
+  var oFCKeditor = new FCKeditor('FCKeditor1');
+  oFCKeditor.BasePath = '/demo/fckeditor/' ;
   oFCKeditor.ToolbarSet = 'Basic';
   oFCKeditor.Config['ToolbarCanCollapse'] = false;
   oFCKeditor.ReplaceTextarea();

@@ -1,34 +1,31 @@
 /*
- * Markup: <textarea id="FCKeditor1" name="FCKeditor1"></textarea>
- * 
- * googiespell directory  = /demo/googiespell
- * 
+ * Markup: <textarea id="CKeditor1" name="CKeditor1"></textarea>
+ * Depends on googiespell_editor.js
  */
 
 
 // CKEditor - Handler for when editor is ready to set custom events.
 
 CKEDITOR.on('instanceReady', function(e) {
-  var editorObj = CKEDITOR.instances.FCKeditor1,
+  var editorObj = CKEDITOR.instances.CKeditor1,
       editorDocument = editorObj.document.$,
-      googie = new GoogieSpell('/cbsides/demo/googiespell/', '/cbsides/demo/googiespell/sendReq.php?lang=');
+      googie = new GoogieSpell('/demo/googiespell/', '/demo/googiespell/sendReq.php?lang=');
     
-  //  Attach GoogieSpell to editor's iframe page now that it's ready
+  //  Attach GoogieSpell to editor's iframe document now that it's ready
   googie.setSpellContainer('spell_container');
   googie.decorateTextarea(editorDocument.body);
   
   /*
    * add googiespell CSS to editor iframe page
-   * (use @import in FCK's editor_area.css alternatively)
    */
   var googieCSS = editorDocument.createElement('link');
   googieCSS.setAttribute('rel', 'stylesheet');
   googieCSS.setAttribute('type', 'text/css');
-  googieCSS.setAttribute('href', '/cbsides/demo/googiespell/googiespell.css');
+  googieCSS.setAttribute('href', '/demo/googiespell/googiespell.css');
   editorDocument.getElementsByTagName('head')[0].appendChild(googieCSS);
   
   /*
-   * Replace AJS.DIV() with a div generated in the editor's iframe document
+   * Replace AJS.DIV() with an element generated in the editor's iframe document
    * so it can be appended to the editor in all browsers (looking at you, IE!)
    */
   googie.createInFrame = function(tag, className) {
@@ -119,5 +116,5 @@ window.onload = function()
 {
   CKEDITOR.config.toolbar = 'Basic';
   CKEDITOR.config.scayt_autoStartup = false;  //  disable default spellchecker
-	CKEDITOR.replace( 'FCKeditor1' );
+	CKEDITOR.replace( 'CKeditor1' );
 }
